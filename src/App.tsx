@@ -5,3 +5,6 @@ export function App() {
     </h1>
   )
 }
+ export function helloVitest() {
+  return "Hello vitest!"
+ }
