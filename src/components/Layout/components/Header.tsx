@@ -3,7 +3,7 @@ import { Link } from 'wouter'
 export function Header() {
   return (
     <nav className="navbar navbar-light">
-      <div className="container">
+      <div className="container mx-auto px-3">
         <a className="navbar-brand" href="/">conduit</a>
         <ul className="nav navbar-nav pull-xs-right">
           <li className="nav-item">

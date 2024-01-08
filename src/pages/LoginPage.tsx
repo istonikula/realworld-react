@@ -1,7 +1,7 @@
 export function LoginPage() {
   return (
-    <div className="auth-page">
-      <div className="container page">
+    <div className="mt-6">
+      <div className="container mx-auto px-3">
         <div className="row">
           <div className="col-md-6 offset-md-3 col-xs-12">
             <h1 className="text-xs-center">Sign in</h1>
