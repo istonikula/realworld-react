@@ -5090,12 +5090,6 @@ footer {
   position: absolute;
   bottom: 0;
   width: 100%; }
-  footer .attribution {
-    vertical-align: middle;
-    margin-left: 10px;
-    font-size: 0.8rem;
-    color: #bbb;
-    font-weight: 300; }
 
 .error-messages {
   color: #B85C5C !important;
