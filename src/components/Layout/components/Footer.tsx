@@ -2,7 +2,7 @@ import { Link } from 'wouter'
 
 export function Footer() {
   return (
-    <footer>
+    <footer className="absolute bottom-0 mt-12 py-4 w-full bg-[#f3f3f3] ">
       <div className="container mx-auto px-3">
         <Link to="/" className="align-middle font-['Titillium_Web']">conduit</Link>
         <span className="ml-2.5 align-middle text-xs text-[#bbb] font-light">
