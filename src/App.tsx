@@ -23,6 +23,3 @@ export function App() {
     </Layout>
   )
 }
- export function helloVitest() {
-  return "Hello vitest!"
- }
