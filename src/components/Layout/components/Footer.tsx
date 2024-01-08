@@ -4,7 +4,7 @@ export function Footer() {
   return (
     <footer>
       <div className="container mx-auto px-3">
-        <Link to="/" className="logo-font">conduit</Link>
+        <Link to="/" className="align-middle font-['Titillium_Web']">conduit</Link>
         <span className="attribution">
           An interactive learning project from <a href="https://thinkster.io">Thinkster</a>.
           Code &amp; design licensed under MIT.
