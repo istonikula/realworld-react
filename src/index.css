@@ -2,3 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  a {
+    color: #5cb85c;
+  }
+
+  a:focus, a:hover {
+    color: #3d8b3d;
+    text-decoration: underline;
+  }
+}
