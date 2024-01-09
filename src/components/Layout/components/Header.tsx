@@ -1,10 +1,15 @@
-import { cva } from 'class-variance-authority'
+import { cva, cx } from 'class-variance-authority'
 import { Link as WLink, useRoute } from 'wouter'
 
 export function Header() {
   return (
     <nav className="py-2 px-4">
-      <div className="container mx-auto px-3 flex justify-between items-center">
+      <div className={cx([
+        'container',
+        'mx-auto max-w-6xl',
+        'px-3',
+        'flex justify-between items-center'
+      ])}>
         <a className="font-['Titillium_Web'] text-2xl" href="/">conduit</a>
         <ul className="flex">
           <li>
