@@ -1,6 +1,8 @@
 import * as React from 'react'
+
+import { useUserClient } from '~/http/user.ts'
+
 import { Login, NewUserRegistration, User } from './user.ts'
-import { useUserClient } from '../http/user.ts'
 import { UserService } from './ports.ts'
 
 export function useStore() {
@@ -9,8 +11,6 @@ export function useStore() {
   const userSrv: UserService = useUserClient()
 
   const loading = false
-
-  const isLoggedIn = () => user != undefined
 
   const registerUser = (reg: NewUserRegistration): Promise<User> =>
     userSrv.register(reg).then(user => {
@@ -27,7 +27,6 @@ export function useStore() {
   return {
     loading,
 
-    isLoggedIn,
     user,
 
     registerUser,

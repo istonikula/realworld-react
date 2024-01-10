@@ -1,7 +1,13 @@
 import { cva, cx } from 'class-variance-authority'
 import { Link as WLink, useRoute } from 'wouter'
 
+import { Store } from '~/domain/use-store.ts'
+
 export function Header() {
+  const store = Store.useCtx()
+  const user = store.user
+  const isLoggedIn = user != undefined
+
   return (
     <nav className="py-2 px-4">
       <div className={cx([
@@ -12,15 +18,27 @@ export function Header() {
       ])}>
         <a className="font-['Titillium_Web'] text-2xl" href="/">conduit</a>
         <ul className="flex">
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li className="ml-4">
-            <Link to="/login">Sign in</Link>
-          </li>
-          <li className="ml-4">
-            <Link to="/register">Sign up</Link>
-          </li>
+          <li><Link to="/">Home</Link></li>
+          {!isLoggedIn && (
+            <>
+              <li className="ml-4"><Link to="/login">Sign in</Link></li>
+              <li className="ml-4"><Link to="/register">Sign up</Link></li>
+            </>
+          )}
+          {isLoggedIn && (
+            <>
+              <li className="ml-4"><Link to="/editor">
+                <i className="ion-compose" />&nbsp;New article</Link>
+              </li>
+              <li className="ml-4"><Link to="/settings">
+                <i className="ion-gear-a" />&nbsp;Settings</Link>
+              </li>
+              <li className="ml-4">
+                {/* TODO: pic */}
+                <Link to={`/profile${user.username}`}></Link>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </nav>

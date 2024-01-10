@@ -1,5 +1,6 @@
 import { cx } from 'class-variance-authority'
-import { Store } from '../domain/use-store.ts'
+
+import { Store } from '~/domain/use-store.ts'
 
 export function HomePage() {
   const store = Store.useCtx()

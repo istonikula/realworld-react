@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useLocation } from 'wouter'
 
-import { Store } from '../domain/use-store.ts'
+import { Store } from '~/domain/use-store.ts'
 
 const schema = yup
   .object({

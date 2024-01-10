@@ -9,6 +9,8 @@
     "strict": true,
 
     // modules
+    "baseUrl": "src",
+    "paths": { "~/*": ["./*"] },
     "allowImportingTsExtensions": true,
     "module": "ESNext",
     "moduleResolution": "bundler",

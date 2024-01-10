@@ -1,4 +1,5 @@
 import { Route, Switch } from 'wouter'
+
 import { HomePage } from './pages/HomePage.tsx'
 import { LoginPage } from './pages/LoginPage.tsx'
 import { RegisterPage } from './pages/RegisterPage.tsx'
