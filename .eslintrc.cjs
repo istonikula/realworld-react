@@ -28,6 +28,10 @@ module.exports = {
       { allowConstantExport: true },
     ],
     'quotes': ['error', 'single'],
-    'semi': ['error', 'never']
+    'semi': ['error', 'never'],
+    '@typescript-eslint/no-unused-vars': ['error', { 
+      'argsIgnorePattern': '^_',
+      'destructuredArrayIgnorePattern': '^_'
+    }]
   },
 }

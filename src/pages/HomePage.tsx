@@ -1,6 +1,9 @@
 import { cx } from 'class-variance-authority'
+import { Store } from '../domain/use-store.ts'
 
 export function HomePage() {
+  const store = Store.useCtx()
+
   return (
     <div className="home-page">
       <div className={cx(
@@ -16,6 +19,9 @@ export function HomePage() {
           </h1>
           <p className="font-light text-center text-2xl">A place to share your knowledge.</p>
         </div>
+      </div>
+      <div>
+        <pre>User: {JSON.stringify(store.user, null, 2)}</pre>
       </div>
     </div>
   )

@@ -2,6 +2,9 @@ import { cx } from 'class-variance-authority'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import { useLocation } from 'wouter'
+
+import { Store } from '../domain/use-store.ts'
 
 const schema = yup
   .object({
@@ -13,13 +16,16 @@ const schema = yup
 type Inputs = yup.InferType<typeof schema>
 
 export function RegisterPage() {
+  const store = Store.useCtx()
+  const [_, setLocation] = useLocation()
   const { register, handleSubmit, formState: { errors } } = useForm({ 
     mode: 'onTouched',
     resolver: yupResolver(schema)
   })
 
   const onSubmit: SubmitHandler<Inputs> = data => {
-    console.log('submit', data)
+    // TODO handle error
+    return store.registerUser(data).then(() => setLocation('/', { replace: true }))
   }
 
   return (
@@ -30,7 +36,7 @@ export function RegisterPage() {
       ])}>
         <h1 className="mb-2 self-center text-[2.5rem] leading-[1.1]">Sign up</h1>
         <p className="mb-4 self-center">
-          <a href="/register">Have an account?</a>
+          <a href="/login">Have an account?</a>
         </p>
 
         <ul className="mb-4 text-[#b85c5c] font-bold">
@@ -39,7 +45,8 @@ export function RegisterPage() {
           <li>{errors.password?.message}</li>
         </ul>
 
-        <form className="flex flex-col" onSubmit={void handleSubmit(onSubmit)}>
+        {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
+        <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
           <fieldset className="mb-4">
             <input className={formControl} type="text" placeholder="Username" {...register('username')} />
           </fieldset>

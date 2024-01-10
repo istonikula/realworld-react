@@ -9,7 +9,7 @@ export function LoginPage() {
       ])}>
         <h1 className="mb-2 self-center text-[2.5rem] leading-[1.1]">Sign in</h1>
         <p className="mb-4 self-center">
-          <a href="/register">Need an account? jepa</a>
+          <a href="/register">Need an account?</a>
         </p>
 
         <ul className="mb-4 text-[#b85c5c] font-bold">
