@@ -2,15 +2,14 @@ import { cx } from 'class-variance-authority'
 
 export function LoginPage() {
   return (
-    <div className="container mt-6 mx-auto px-6">
+    <div className="mt-6 px-6">
       <div className={cx([
-        'mx-auto max-w-md',
-        'sm:w-3/5 md:w-1/2',
+        'sm:mx-auto sm:w-full sm:max-w-sm',
         'flex flex-col'
       ])}>
         <h1 className="mb-2 self-center text-[2.5rem] leading-[1.1]">Sign in</h1>
         <p className="mb-4 self-center">
-          <a href="/register">Need an account?</a>
+          <a href="/register">Need an account? jepa</a>
         </p>
 
         <ul className="mb-4 text-[#b85c5c] font-bold">
