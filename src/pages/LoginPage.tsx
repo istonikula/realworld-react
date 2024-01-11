@@ -1,6 +1,32 @@
 import { cx } from 'class-variance-authority'
+import { useForm, SubmitHandler } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
+
+import { Store } from '~/domain/use-store.ts'
+import { useLocation } from 'wouter'
+
+const schema = yup
+  .object({
+    email: yup.string().email().required().label('Email'),
+    password: yup.string().min(5).required().label('Password'),
+  })
+  .required()
+type Inputs = yup.InferType<typeof schema>
 
 export function LoginPage() {
+  const store = Store.useCtx()
+  const [_, setLocation] = useLocation()
+  const { register, handleSubmit, formState: { errors } } = useForm({ 
+    mode: 'onTouched',
+    resolver: yupResolver(schema)
+  })
+
+  const onSubmit: SubmitHandler<Inputs> = data => {
+    // TODO handle error
+    return store.login(data).then(() => setLocation('/', { replace: true }))
+  }
+
   return (
     <div className="mt-6 px-6">
       <div className={cx([
@@ -13,17 +39,14 @@ export function LoginPage() {
         </p>
 
         <ul className="mb-4 text-[#b85c5c] font-bold">
-          <li>That email is already taken</li>
+          <li>{errors.email?.message}</li>
+          <li>{errors.password?.message}</li>
         </ul>
 
-        <form className="flex flex-col">
-          <fieldset className="mb-4">
-            <input className={formControl} type="text" placeholder="Email" />
-          </fieldset>
-          <fieldset className="mb-4">
-            <input className={formControl} type="password" placeholder="Password" />
-          </fieldset>
-          <button className={btn}>Sign in</button>
+        <form className="flex flex-col" onSubmit={e => void handleSubmit(onSubmit)(e)}>
+          <input className={cx('mb-4', formControl)} type="text" placeholder="Email" {...register('email')} />
+          <input className={cx('mb-4', formControl)} type="password" placeholder="Password" {...register('password')} />
+          <button className={btn} type="submit">Sign in</button>
         </form>
       </div>
     </div>

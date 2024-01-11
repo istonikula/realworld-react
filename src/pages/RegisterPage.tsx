@@ -45,18 +45,10 @@ export function RegisterPage() {
           <li>{errors.password?.message}</li>
         </ul>
 
-        {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-        <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
-          <fieldset className="mb-4">
-            <input className={formControl} type="text" placeholder="Username" {...register('username')} />
-          </fieldset>
-          <fieldset className="mb-4">
-            <input className={formControl} type="text" placeholder="Email" {...register('email')} />
-          </fieldset>
-          <fieldset className="mb-4">
-            <input className={formControl} type="password" placeholder="Password" {...register('password')} />
-          </fieldset>
-
+        <form className="flex flex-col" onSubmit={e => void handleSubmit(onSubmit)(e)}>
+          <input className={cx('mb-4', formControl)} type="text" placeholder="Username" {...register('username')} />
+          <input className={cx('mb-4', formControl)} type="text" placeholder="Email" {...register('email')} />
+          <input className={cx('mb-4', formControl)} type="password" placeholder="Password" {...register('password')} />
           <button className={btn} type="submit">Sign up</button>
         </form>
       </div>
