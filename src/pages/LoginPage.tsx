@@ -1,10 +1,12 @@
 import { cx } from 'class-variance-authority'
-import { useForm, SubmitHandler } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import { useLocation } from 'wouter'
 
 import { Store } from '~/domain/use-store.ts'
-import { useLocation } from 'wouter'
+import { handleError } from '~/error-handling/index.ts'
+import { isApiErrorHolder } from '~/http/error-parser.ts'
 
 const schema = yup
   .object({
@@ -12,19 +14,25 @@ const schema = yup
     password: yup.string().min(5).required().label('Password'),
   })
   .required()
-type Inputs = yup.InferType<typeof schema>
 
 export function LoginPage() {
   const store = Store.useCtx()
   const [_, setLocation] = useLocation()
-  const { register, handleSubmit, formState: { errors } } = useForm({ 
+  const { register, handleSubmit, formState: { errors }, setError } = useForm({
     mode: 'onTouched',
     resolver: yupResolver(schema)
   })
 
-  const onSubmit: SubmitHandler<Inputs> = data => {
-    // TODO handle error
-    return store.login(data).then(() => setLocation('/', { replace: true }))
+  const safeHandleSubmit = (evt?: React.BaseSyntheticEvent) => {
+    void handleSubmit(data =>
+      store.login(data).then(() => setLocation('/', { replace: true }))
+    )(evt).catch(e => {
+      if (isApiErrorHolder(e) && e.err.name === 'UnauthorizedError') {
+        setError('root', { type: 'api', message: 'email or password is invalid'})
+        return
+      }
+      return handleError(e)
+    })
   }
 
   return (
@@ -39,11 +47,12 @@ export function LoginPage() {
         </p>
 
         <ul className="mb-4 text-[#b85c5c] font-bold">
+          <li>{errors.root?.message}</li>
           <li>{errors.email?.message}</li>
           <li>{errors.password?.message}</li>
         </ul>
 
-        <form className="flex flex-col" onSubmit={e => void handleSubmit(onSubmit)(e)}>
+        <form className="flex flex-col" onSubmit={safeHandleSubmit}>
           <input className={cx('mb-4', formControl)} type="text" placeholder="Email" {...register('email')} />
           <input className={cx('mb-4', formControl)} type="password" placeholder="Password" {...register('password')} />
           <button className={btn} type="submit">Sign in</button>
@@ -69,5 +78,5 @@ const btn = cx([
   'text-white',
   'bg-[#5cb85c]',
   'hover:bg-[#419641] hover:border-[#449d44]',
-  'focus:bg-[#419641]'
+  'focus:outline-none focus-visible:ring-2 focus-visible:ring-[#419641] focus-visible:ring-offset-2'
 ])

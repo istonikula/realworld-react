@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { Route, Switch } from 'wouter'
 
 import { HomePage } from './pages/HomePage.tsx'
@@ -5,9 +6,12 @@ import { LoginPage } from './pages/LoginPage.tsx'
 import { RegisterPage } from './pages/RegisterPage.tsx'
 import { Layout } from './components/Layout/Layout.tsx'
 import { Store, useStore } from './domain/use-store.ts'
+import { ModalContainer, Modals, useModals } from './components/Modals.tsx'
+import { GlobalModal } from './globals/index.ts'
 
 export function App() {
   return (
+    <GlobalModalProvider>
     <StoreLoader>
     <Layout>
       <main>
@@ -22,9 +26,23 @@ export function App() {
             <RegisterPage />
           </Route>
         </Switch>
+
+        <ModalContainer />
       </main>
     </Layout>
     </StoreLoader>
+    </GlobalModalProvider>
+  )
+}
+
+function GlobalModalProvider(props: React.PropsWithChildren) {
+  const modals = useModals()
+  GlobalModal.set(modals)
+
+  return (
+    <Modals.Provider value={modals}>
+      {props.children}
+    </Modals.Provider>
   )
 }
 
