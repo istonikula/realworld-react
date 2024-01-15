@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { signal } from '@preact/signals-react'
+import { signal } from '@preact-signals/safe-react'
 
 import { Login, NewUserRegistration, User } from './user.ts'
 import { UserService } from './ports.ts'

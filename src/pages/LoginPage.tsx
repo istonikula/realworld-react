@@ -1,4 +1,3 @@
-import { useSignals } from '@preact/signals-react/runtime'
 import { cx } from 'class-variance-authority'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -17,7 +16,6 @@ const schema = yup
   .required()
 
 export function LoginPage() {
-  useSignals()
   const store = Store.useCtx()
   const [_, setLocation] = useLocation()
   const { register, handleSubmit, formState: { errors }, setError } = useForm({

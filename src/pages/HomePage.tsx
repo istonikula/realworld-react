@@ -1,10 +1,8 @@
 import { cx } from 'class-variance-authority'
-import { useSignals } from '@preact/signals-react/runtime'
 
 import { Store } from '~/domain/store.ts'
 
 export function HomePage() {
-  useSignals()
   const store = Store.useCtx()
 
   return (

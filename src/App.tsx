@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { useSignals } from '@preact/signals-react/runtime'
 import { Route, Switch } from 'wouter'
 
 import { HomePage } from './pages/HomePage.tsx'
@@ -50,8 +49,6 @@ function GlobalModalProvider(props: React.PropsWithChildren) {
 
 const store = createStore(userClient)
 function StoreLoader(props: React.PropsWithChildren) {
-  useSignals()
-
   return store.loading.value ? <div>Loading... <button onClick={() => store.loading.value = false}>stop loading</button></div> : (
     <Store.Provider value={store}>
       {props.children}
