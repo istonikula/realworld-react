@@ -1,11 +1,13 @@
+import { useSignals } from '@preact/signals-react/runtime'
 import { cva, cx } from 'class-variance-authority'
 import { Link as WLink, useRoute } from 'wouter'
 
-import { Store } from '~/domain/use-store.ts'
+import { Store } from '~/domain/store.ts'
 
 export function Header() {
+  useSignals()
   const store = Store.useCtx()
-  const user = store.user
+  const user = store.user.value
   const isLoggedIn = user != undefined
 
   return (

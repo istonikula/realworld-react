@@ -1,32 +1,27 @@
 import * as React from 'react'
-
-import { useUserClient } from '~/http/user.ts'
+import { signal } from '@preact/signals-react'
 
 import { Login, NewUserRegistration, User } from './user.ts'
 import { UserService } from './ports.ts'
 
-export function useStore() {
-  const [user, setUser] = React.useState<User | undefined>(undefined)
-
-  const userSrv: UserService = useUserClient()
-
-  const loading = false
+export function createStore(userSrv: UserService) {
+  const user = signal<User | undefined>(undefined)
+  const loading = signal(false)
 
   const registerUser = (reg: NewUserRegistration): Promise<User> =>
-    userSrv.register(reg).then(user => {
-      setUser(user)
-      return user
+    userSrv.register(reg).then(u => {
+      user.value = u
+      return u
     })
 
   const login = (login: Login): Promise<User> =>
-    userSrv.login(login).then(user => {
-      setUser(user)
-      return user
+    userSrv.login(login).then(u => {
+      user.value = u
+      return u
     })
 
   return {
     loading,
-
     user,
 
     registerUser,
@@ -34,7 +29,7 @@ export function useStore() {
   }
 }
 
-const Ctx = React.createContext<ReturnType<typeof useStore> | undefined>(undefined)
+const Ctx = React.createContext<ReturnType<typeof createStore> | undefined>(undefined)
 export const Store = {
   Provider: Ctx.Provider,
   useCtx() {

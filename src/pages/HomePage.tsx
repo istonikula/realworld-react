@@ -1,8 +1,10 @@
 import { cx } from 'class-variance-authority'
+import { useSignals } from '@preact/signals-react/runtime'
 
-import { Store } from '~/domain/use-store.ts'
+import { Store } from '~/domain/store.ts'
 
 export function HomePage() {
+  useSignals()
   const store = Store.useCtx()
 
   return (
@@ -22,7 +24,9 @@ export function HomePage() {
         </div>
       </div>
       <div>
-        <pre>User: {JSON.stringify(store.user, null, 2)}</pre>
+        <button onClick={() => store.loading.value = true}>loading</button>
+        <div>{`loading: ${store.loading.value}`}</div>
+        <pre>User: {JSON.stringify(store.user.value, null, 2)}</pre>
       </div>
     </div>
   )
